@@ -16,8 +16,21 @@ const orderRoutes = require('./api/routes/orders');
 
 mongoose.connect(`mongodb+srv://:${process.env.MONGO_ATLAS_PW}@node-rest-shop-a4exj.mongodb.net/test?retryWrites=true&w=majority`,
   {
-    useMongoClient: true
+    useNewUrlParser: true
+    // useMongoClient: true
+  })
+  .then(() => {
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
   });
+
+
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+mongoose.connection.on('error', (err) => {
+  console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
+});
 
 
 app.use(morgan('dev'));
