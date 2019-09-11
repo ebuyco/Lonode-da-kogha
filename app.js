@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
@@ -12,6 +13,12 @@ const orderRoutes = require('./api/routes/orders');
 //     message: 'It works',
 //   });
 // });
+
+mongoose.connect(`mongodb+srv://:${process.env.MONGO_ATLAS_PW}@node-rest-shop-a4exj.mongodb.net/test?retryWrites=true&w=majority`,
+  {
+    useMongoClient: true
+  });
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
